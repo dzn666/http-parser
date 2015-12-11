@@ -44,7 +44,6 @@ settings.on_header_field = my_header_field_callback;
 
 http_parser *parser = malloc(sizeof(http_parser));
 http_parser_init(parser, HTTP_REQUEST);
-parser->data = my_socket;
 ```
 
 When data is received on the socket execute the parser and check for errors.
@@ -172,10 +171,6 @@ void http_parser_thread(socket_t sock) {
  int nparsed = 0;
  /* allocate memory for user data */
  custom_data_t *my_data = malloc(sizeof(custom_data_t));
-
- /* some information for use by callbacks.
- * achieves thread -> callback information flow */
- my_data->sock = sock;
 
  /* instantiate a thread-local parser */
  http_parser *parser = malloc(sizeof(http_parser));
